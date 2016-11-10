@@ -1,0 +1,24 @@
+{
+	"name": "Tab Origin",
+	"description": "Adds a toolbar button to see where your current tab came from.",
+	"manifest_version": 2,
+	"version": "1.0",
+	"browser_action": {
+		"default_icon": "img/icon.png",
+		"default_title": "Get opener tab"
+	},
+	"background": {
+		"scripts": [
+			"main.js"
+		],
+		"persistent": false
+	},
+	"icons": {
+		"16": "img/16.png",
+		"48": "img/48.png",
+		"128": "img/128.png"
+	},
+	"permissions": [
+		"tabs"
+	]
+}

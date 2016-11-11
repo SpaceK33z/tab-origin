@@ -7,6 +7,10 @@ function addTab(tab) {
 		return;
 	}
 	chrome.tabs.get(tab.openerTabId, openerTab => {
+		if (chrome.runtime.lastError) {
+			console.error('Opener tab was already closed. This should almost never happen.');
+			return;
+		}
 		openerTabs[tab.id] = {
 			id: openerTab.id,
 			url: openerTab.url,
@@ -25,6 +29,7 @@ chrome.tabs.onHighlighted.addListener(highlightInfo => {
 	if (highlightInfo.tabIds.length === 1) {
 		const tabId = highlightInfo.tabIds[0];
 		const hasOpener = !!openerTabs[tabId];
+		// TODO: `setIcon` also accepts a `tabId` parameter. Seemed very buggy though...
 		chrome.browserAction.setIcon({
 			path: hasOpener ? 'img/icon.png' : 'img/icon_inactive.png',
 		});

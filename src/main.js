@@ -25,16 +25,12 @@ function removeTab(tab) {
 chrome.tabs.onCreated.addListener(addTab);
 chrome.tabs.onRemoved.addListener(removeTab);
 
-chrome.tabs.onHighlighted.addListener(highlightInfo => {
-	if (highlightInfo.tabIds.length === 1) {
-		const tabId = highlightInfo.tabIds[0];
-		const hasOpener = !!openerTabs[tabId];
-		// TODO: `setIcon` also accepts a `tabId` parameter. Seemed very buggy though...
-		chrome.browserAction.setIcon({
-			path: hasOpener ? 'img/icon.png' : 'img/icon_inactive.png',
-		});
-	}
-	// TODO: If multiple tabs are selected, browserAction should be inactive.
+chrome.tabs.onActivated.addListener(activeInfo => {
+	const hasOpener = !!openerTabs[activeInfo.tabId];
+	// TODO: `setIcon` also accepts a `tabId` parameter. Seemed very buggy though...
+	chrome.browserAction.setIcon({
+		path: hasOpener ? 'img/icon.png' : 'img/icon_inactive.png',
+	});
 });
 
 chrome.browserAction.onClicked.addListener(tab => {

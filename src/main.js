@@ -1,4 +1,3 @@
-// Holds
 const openerTabs = {};
 
 function addTab(tab) {
